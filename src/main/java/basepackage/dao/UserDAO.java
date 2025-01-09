@@ -14,31 +14,32 @@ import java.util.List;
 @Component
 public class UserDAO extends Persistence {
     @PersistenceContext
-    private EntityManager em;
+    private EntityManager entityManager;
 
     @Transactional
     public List<User> getUsers() {
-        TypedQuery<User> query = em.createQuery("select u from User u", User.class);
+        TypedQuery<User> query = entityManager.createQuery("from User", User.class);
         return query.getResultList();
     }
 
     @Transactional
     public User show(int id) {
-        return em.find(User.class, id);
+        return entityManager.find(User.class, id);
     }
 
     @Transactional
     public void save(User user) {
-        em.persist(user);
+        entityManager.persist(user);
     }
 
     @Transactional
     public void update(int id, @Valid User user) {
-        em.refresh(em.find(User.class, id));
+        entityManager.find(User.class, id);
+        entityManager.merge(user);
     }
 
     @Transactional
     public void delete(int id) {
-        em.remove(em.getReference(User.class, id));
+        entityManager.remove(entityManager.find(User.class, id));
     }
 }

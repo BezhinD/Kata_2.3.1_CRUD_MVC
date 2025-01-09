@@ -2,17 +2,17 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Человек</title>
+    <title>User</title>
 </head>
 <body>
+<div>
 <p th:text="${user.getName()}">VALUE</p>
+    <p th:text="${user.getLastName()}">VALUE</p>
 <p th:text="${user.getId()}">VALUE</p>
-
-<a th:href="@{/users/{id}/edit(id=${user.getId()})}">Edit</a>
-
-<form th:action="@{/users/{id}(id=${user.getId()})}" th:method="DELETE">
-    <input type="submit" value="Delete"/>
-</form>
->
+    <a th:href="@{/users/edit(id=${user.getId()})}">Edit</a>
+    <form th:action="@{/users/(id=${user.getId()})}" th:method="POST">
+        <input type="submit" value="Delete"/>
+    </form>
+</div>
 </body>
 </html>

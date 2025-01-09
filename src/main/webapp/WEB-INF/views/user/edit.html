@@ -5,14 +5,14 @@
     <title>Update user</title>
 </head>
 <body>
-<form th:action="@{/users/{id}(id=${user.getId()})}" th:method="PATCH" th:object="${user}">
+<form th:action="@{/users/update(id=${user.getId()})}" th:method="POST" th:object="${user}">
     <label for="name">Enter name: </label>
     <input id="name" th:field="*{name}" type="text"/>
     <div style="color: red" th:errors="*{name}" th:if="${#fields.hasErrors('name')}">Name error</div>
     <br/>
     <label for="lastname">Enter lastname: </label>
     <input id="lastname" th:field="*{lastName}" type="text"/>
-    <div style="color: red" th:errors="*{lastName}" th:if="${#fields.hasErrors('lastname')}">Lastname error</div>
+    <div style="color: red" th:errors="*{lastName}" th:if="${#fields.hasErrors('lastName')}">Lastname error</div>
     <br/>
     <label for="age">Enter age: </label>
     <input id="age" th:field="*{age}" type="text"/>

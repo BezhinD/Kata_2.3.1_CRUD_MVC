@@ -5,7 +5,11 @@ import basepackage.models.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.validation.Valid;
 
@@ -25,8 +29,8 @@ public class UserController {
         return "/user/index";
     }
 
-    @GetMapping("/{id}")
-    public String show(@PathVariable("id") int id, Model model) {
+    @GetMapping("/")
+    public String show(@RequestParam("id") int id, Model model) {
         model.addAttribute("user", userDAO.show(id));
         return "user/show";
     }
@@ -45,15 +49,15 @@ public class UserController {
         return "redirect:/users";
     }
 
-    @GetMapping("/{id}/edit")
-    public String edit(@PathVariable("id") int id, Model model) {
+    @GetMapping("/edit")
+    public String edit(@RequestParam(value = "id") int id, Model model) {
         model.addAttribute("user", userDAO.show(id));
         return "user/edit";
     }
 
-    @PatchMapping("/{id}")
+    @PostMapping("/update")
     public String update(@ModelAttribute("user") @Valid User user, BindingResult bindingResult,
-                         @PathVariable("id") int id) {
+                         @RequestParam("id") int id) {
         if (bindingResult.hasErrors()) {
             return "user/edit";
         }
@@ -61,8 +65,8 @@ public class UserController {
         return "redirect:/users";
     }
 
-    @DeleteMapping("/{id}")
-    public String delete(@PathVariable("id") int id) {
+    @PostMapping("/")
+    public String delete(@RequestParam("id") int id) {
         userDAO.delete(id);
         return "redirect:/users";
     }
